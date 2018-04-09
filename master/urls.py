@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from master import views
 
 urlpatterns = [
     url(r'^$', views.home, name="home"),
+    url(r'^mentions-legales/$', views.mentions, name='mentions'),
+    url(r'^product/', include('product.urls')),
+    url(r'^user/', include('account.urls')),
     path('admin/', admin.site.urls),
 ]
