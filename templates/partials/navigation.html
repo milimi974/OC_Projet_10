@@ -1,0 +1,77 @@
+{% load static %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top
+{% if not page == 'home' %}
+  bg-menu-dark
+{% endif%}
+
+" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="/">
+      <img src="{% static 'img/logo_pur_beurre.png' %}" alt="logo pur beurre" class="logo">
+        Pur Beurre
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown search">
+            <a class="btn btn-primary " href="/" role="button" >Chercher</a>
+            {% comment %}
+            <a class="nav-link dropdown-toggle btn btn-primary " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Chercher</a>
+            <div class="dropdown-menu nav-search">
+                <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="post">{% csrf_token %}
+                    <input class="form-control mr-sm-2"
+                           type="search" name="term"
+                           placeholder="Nom de l'aliment"
+                           id="autocomplete-product-2"
+                           data-href="{% url 'product_terms' %}"
+                           aria-label="Search"/>
+
+                    <button class="btn btn-primary  my-2 my-sm-0" type="submit"><i class="fas fa-10 fa-search"></i></button>
+                </form>
+
+            </div>
+            {% endcomment %}
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger menu-link-icon login" href="{% url 'profile' %}"
+          data-toggle="tooltip" data-placement="bottom" title="Mon compte"
+          >
+             <i class="fas fa-2x fa-user"></i>
+             <span class="nav-text">Mon compte</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger menu-link-icon login" href="{% url 'login' %}"
+          data-toggle="tooltip" data-placement="bottom" title="Connexion"
+          >
+             <i class="fas fa-2x fa-sign-in-alt"></i>
+             <span class="nav-text">Connexion</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger menu-link-icon" href="{% url 'substitution' %}"
+          data-toggle="tooltip" data-placement="bottom" title="Mes aliments"
+          ><span class="menu-icon menu-icon-carrot" id="aliments"><span class="nav-text">Mes aliments</span></span>
+
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger menu-link-icon error" href="{% url 'logout' %}"
+            data-toggle="tooltip" data-placement="bottom" title="Déconnexion"
+            ><i class="fas fa-2x fa-sign-out-alt"></i>
+              <span class="nav-text">Déconnexion</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

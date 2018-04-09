@@ -1,0 +1,27 @@
+<nav aria-label="Page navigation" class="pagination">
+  <ul class="pagination">
+
+        <li class="page-item
+        {% if not object.has_previous %}
+         disabled
+        {% endif %}
+        "><a class="page-link" href="?page={% if object.has_previous %}{{ object.previous_page_number }}{{url}}{% endif %}">Previous</a></li>
+
+      {% for number in total_page %}
+        <li class="page-item
+            {% if number|add:'+1' == object.number %}
+             active
+             {% endif %}
+            "><a class="page-link" href="?page={{ number|add:'+1' }}{{url}}">{{ number|add:'+1'  }}</a></li>
+      {% endfor %}
+      {% if more %}
+        <a class="page-link" href="?page={{ more }}{{url}}">...</a>
+      {% endif %}
+      <li class="page-item
+       {% if not object.has_next %}
+        disabled
+       {% endif %}
+       "><a class="page-link" href="?page={% if object.has_next %}{{ object.next_page_number }}{{url}}{% endif %}">Next</a></li>
+
+  </ul>
+</nav>
