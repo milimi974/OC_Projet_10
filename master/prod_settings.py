@@ -9,11 +9,11 @@ TEMPLATE_DEBUG = False# debug template deactivate
 
 DATABASES['default'] = dj_database_url.config()
 
-MIDDLEWARE += 'whitenoise.middleware.WhiteNoiseMiddleware'
+MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-SECRET_KEY = 'usn)9gzldaz@%)84myuikf3#38fsqi+ns#sc)=jji#$^0w&pt*'
+# SECRET_KEY = get_env_variable('SECRET_KEY')
 
 ALLOWED_HOSTS = ['p8pb.herokuapp.com'] # authorized hostname
 
