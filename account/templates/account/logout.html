@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title%} {{ title }} {% endblock %}
+{% block content%}
+
+<header class="bg-secondary text-center text-white d-flex page-header" style="background-image: url('{% static product.picture %}');">
+  <div class="container my-auto">
+    <div class="row">
+      <div class="col-lg-12 mx-auto">
+        <h1 class="text-uppercase">
+          <strong>Bye bye (^o^)/</strong>
+        </h1>
+        <hr>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="p-0" id="products">
+  <div class="container ">
+    <div class="row logout">
+      <div class="alert alert-success" role="alert">
+        Vous avez bien été déconnecté .
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

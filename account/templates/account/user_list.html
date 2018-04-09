@@ -1,0 +1,65 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content%}
+{% block title%} {{ title }} {% endblock %}
+<header class=" text-center text-primary d-flex page-header products" style="background-image: url('');">
+  <div class="container my-auto">
+    <div class="row">
+      <div class="col-lg-12 mx-auto">
+        <h1 class="text-uppercase text-caramel">
+          <strong>Mes aliments à substitué</strong>
+        </h1>
+        <hr>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="col-lg-8 mx-auto text-center">
+    <img class="img-fluid" src="{% static 'img/nutriscore.png' %}" alt="image Note nutritionnelle de couleur NutriScore">
+    <hr class="my-4">
+</div>
+<section class="p-0" id="products">
+  <div class="container ">
+    <div class="row">
+
+      {% for up in user_products %}
+          <div class="col-sm-12 col-md-4 item">
+              <div class="card card-product text-center" style="width: 18rem;">
+                  <img class="img-fluid" src="{{ up.product.picture }}" alt="Photo {{ up.product.name }}">
+                  <a class="hoverlay"  href="{% url 'show' id=up.product.id %}">
+                      <i class="fas fa-eye"></i>
+                  </a>
+                  <span class="badge badge-pill nutri-badge badge-{{up.product.nutri_code}} text-uppercase" >{{up.product.nutri_code}}</span>
+                  <div class="card-body">
+                    <span class="card-title">{{ up.product.name }}</span>
+                        <p>
+                          <button class="btn btn-outline-caramel" type="button" data-toggle="collapse" data-target="#collapse-{{ up.product.id }}" aria-expanded="false" aria-controls="collapse-{{ up.product.id }}">
+                            Aliments de substitutions
+                          </button>
+                        </p>
+                        <div class="collapse" id="collapse-{{ up.product.id }}">
+
+                           <div class="list-group product-list">
+                               {% for substitution in up.substitutions.all %}
+                               <a href="{% url 'show' id=substitution.id %}" class="list-group-item list-group-item-action list-group-item-primary">
+                                   {{ substitution.name|truncatechars:20 }}
+                                   <span class="badge badge-primary badge-pill badge-{{ substitution.nutri_code }} ">{{ substitution.nutri_code }}</span>
+                               </a>
+                               {% endfor %}
+
+                            </div>
+                        </div>
+                    {# <a class="btn-delete btn btn-outline-danger text pull-right" href="/product/delete/{{ up.product.id }}"><i class="fas fa-trash-alt"></i> Supprimer</a> #}
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+
+    </div>
+      {{ pagination }}
+  </div>
+</section>
+
+
+{% endblock %}

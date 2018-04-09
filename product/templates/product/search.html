@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title%} {{ title }} {% endblock %}
+{% block content%}
+<header class="bg-dark text-center text-white d-flex page-header" style="background-image: url('{{ product.picture }}');">
+  <div class="container my-auto">
+    <div class="row">
+      <div class="col-lg-12 mx-auto">
+        <h1 class="text-uppercase">
+          <strong>{{ product.name }}</strong>
+        </h1>
+        <hr>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section  class="bg-primary section-heading" id="title">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto text-center">
+        <h2 class="section-heading  text-white">
+
+            Vous pouvez remplacer cet aliment par :
+
+        </h2>
+        <hr class="light my-4">
+      </div>
+    </div>
+  </div>
+</section>
+<div class="col-lg-8 mx-auto text-center">
+    <img class="img-fluid" src="{% static 'img/nutriscore.png' %}" alt="image Note nutritionnelle de couleur NutriScore">
+    <hr class="my-4">
+</div>
+<section class="p-0" id="products">
+  <div class="container ">
+    <div class="row">
+
+      {% for substitution in substitutions %}
+          <div class="col-sm-12 col-md-4 item">
+              <div class="card card-product" style="width: 18rem;">
+                  <img class="img-fluid" src="{{ substitution.picture }}" alt="Photo {{ substitution.name }}">
+                  <a class="hoverlay"  href="{% url 'show' id=substitution.id %}">
+                      <i class="fas fa-eye"></i>
+                  </a>
+                  <span class="badge badge-pill nutri-badge badge-{{substitution.nutri_code}} text-uppercase" >{{substitution.nutri_code}}</span>
+                  <div class="card-body text-center">
+                    <span class="card-title ">{{ substitution.name }}</span>
+                      <form action="{% url 'save_product'%}" method="post" class="form-add-product">
+                          {% csrf_token %}
+                          <input type="hidden" name="id" value="{{ product.id }}">
+                          <input type="hidden" name="sub_id" value="{{ substitution.id }}">
+                          <button class="btn btn-outline-biscuit btn-save"><i class="fas fa-save"></i> Sauvegarder</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      {% empty %}
+        <div class="col text-caramel text-center">
+            <p> Désoler aucun aliment de substitution pour ce produit !</p>
+        </div>
+
+      {% endfor %}
+
+    </div>
+      {{ pagination }}
+  </div>
+</section>
+
+
+{% endblock %}
