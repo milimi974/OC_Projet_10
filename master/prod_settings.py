@@ -1,9 +1,13 @@
+import dj_database_url
+
 from .settings import *
 
 
 DEBUG = False
 
 TEMPLATE_DEBUG = False# debug template deactivate
+
+DATABASES['default'] = dj_database_url.config()
 
 SECRET_KEY = 'usn)9gzldaz@%)84myuikf3#38fsqi+ns#sc)=jji#$^0w&pt*'
 
