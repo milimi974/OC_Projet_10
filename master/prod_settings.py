@@ -9,10 +9,10 @@ TEMPLATE_DEBUG = False# debug template deactivate
 
 DATABASES['default'] = dj_database_url.config()
 
-#MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
+MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # SECRET_KEY = get_env_variable('SECRET_KEY')
 
