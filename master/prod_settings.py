@@ -1,9 +1,9 @@
 from .settings import *
 
 
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False # debug template deactivate
+TEMPLATE_DEBUG = True# debug template deactivate
 
 SECRET_KEY = 'usn)9gzldaz@%)84myuikf3#38fsqi+ns#sc)=jji#$^0w&pt*'
 

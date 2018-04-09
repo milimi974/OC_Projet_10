@@ -1,12 +1,6 @@
 from django.conf.urls import url
 
-from account.views import (
-    login_view,
-    logout_view,
-    register_view,
-    profile_view,
-    save,
-    list)
+from account.views import save, register_view, profile_view, login_view, logout_view
 
 urlpatterns = [
     url(r'^substitution/$', list, name="substitution"),
