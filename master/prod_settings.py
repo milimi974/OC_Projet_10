@@ -3,7 +3,7 @@ import dj_database_url
 from .settings import *
 
 
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = False# debug template deactivate
 
