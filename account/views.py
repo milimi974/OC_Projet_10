@@ -51,8 +51,23 @@ def logout_view(request):
 
 # register view
 def register_view(request):
+    title = "inscription"
+    form = UserRegisterForm(request.POST or None)
+    # get reference to page to redirect after connection
+    next = request.GET.get('next')
 
-    context = {"form": '', "title": ''}
+    # Create user if clean form data
+    if form.is_valid():
+        user = form.save(commit=False)
+        pwd = form.cleaned_data.get('password')
+        user.set_password(pwd)
+        user.save()
+        login(request, user)
+        if next:
+            return redirect(next)
+        return redirect("/")
+
+    context = {"form": form, "title": title}
     return render(request, 'account/form.html', context)
 
 # user profile view
