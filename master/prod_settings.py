@@ -3,7 +3,7 @@ import dj_database_url
 from .settings import *
 
 
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False# debug template deactivate
 
@@ -17,5 +17,5 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # SECRET_KEY = get_env_variable('SECRET_KEY')
 
-ALLOWED_HOSTS = ['p8pb.herokuapp.com'] # authorized hostname
+ALLOWED_HOSTS = ['localhost','p8pb.herokuapp.com'] # authorized hostname
 
