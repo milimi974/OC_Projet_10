@@ -21,7 +21,6 @@ class UserRegisterForm(forms.ModelForm):
 
     def clean_password(self):
         # check password
-        print(self.cleaned_data)
         pwd1 = self.cleaned_data.get("password")
         pwd2 = self.cleaned_data.get("pass2")
 

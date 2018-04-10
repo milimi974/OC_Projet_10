@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
-{% block title%} {{ title }} {% endblock %}
-{% block content%}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
 
 <header class="bg-dark text-center text-white d-flex page-header" style="background-image: url('{{ product.picture }}');">
   <div class="container my-auto">
@@ -23,7 +23,7 @@
       <div class="col  text-center">
           <h3>Nutriscore</h3>
           {% if product.nutri_code and product.nutri_code.strip %}
-            <img src="{% static 'img/nutriscore-'|add:product.nutri_code|add:'.png' %}" alt="nutri-code de l'aliment valeur {{ product.nutri_code|upper}}">
+            <img src="{% static 'img/nutriscore-'|add:product.nutri_code|add:'.png' %}" alt="nutri-code de l'aliment valeur {{ product.nutri_code|upper }}">
 
           {% else %}
             Aucune valeur nutriscore renseigné

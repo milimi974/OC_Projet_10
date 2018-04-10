@@ -48,7 +48,7 @@ def logout_view(request):
     # Disconnect user
     logout(request)
     return render(request, 'account/logout.html')
-"""
+
 # register view
 def register_view(request):
     title = "inscription"
@@ -130,20 +130,4 @@ def save_view(request):
     data_json = json.dumps(data_json)
     mimetype = 'application/json'
     return HttpResponse(data_json, mimetype)
-"""
-# register view
-def register_view(request):
-    pass
 
-
-# user profile view
-def profile_view(request):
-    pass
-
-@login_required(login_url='/user/login/')
-def list_view(request):
-    pass
-
-
-def save_view(request):
-    pass

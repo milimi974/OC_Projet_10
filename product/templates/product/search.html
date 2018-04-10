@@ -1,8 +1,8 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title%} {{ title }} {% endblock %}
-{% block content%}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
 <header class="bg-dark text-center text-white d-flex page-header" style="background-image: url('{{ product.picture }}');">
   <div class="container my-auto">
     <div class="row">
@@ -48,7 +48,7 @@
                   <span class="badge badge-pill nutri-badge badge-{{substitution.nutri_code}} text-uppercase" >{{substitution.nutri_code}}</span>
                   <div class="card-body text-center">
                     <span class="card-title ">{{ substitution.name }}</span>
-                      <form action="{% url 'save_product'%}" method="post" class="form-add-product">
+                      <form action="{% url 'save_product' %}" method="post" class="form-add-product">
                           {% csrf_token %}
                           <input type="hidden" name="id" value="{{ product.id }}">
                           <input type="hidden" name="sub_id" value="{{ substitution.id }}">
