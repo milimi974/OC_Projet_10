@@ -5,7 +5,7 @@ from .settings import *
 
 DEBUG = False
 
-TEMPLATE_DEBUG = False# debug template deactivate
+TEMPLATE_DEBUG = True# debug template deactivate
 
 DATABASES['default'] = dj_database_url.config()
 
