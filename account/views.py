@@ -131,3 +131,19 @@ def save_view(request):
     mimetype = 'application/json'
     return HttpResponse(data_json, mimetype)
 """
+# register view
+def register_view(request):
+    pass
+
+
+# user profile view
+def profile_view(request):
+    pass
+
+@login_required(login_url='/user/login/')
+def list_view(request):
+    pass
+
+
+def save_view(request):
+    pass
