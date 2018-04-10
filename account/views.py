@@ -80,7 +80,7 @@ def list_view(request):
     # user product substitutions
     title = "Mes aliments de substitution"
     #substitutions = Product.all()
-    user_products = UserProduct.objects.all()
+    user_products = UserProduct.objects.all().order_by('id')
 
     # pagination
     paginator = Paginator(user_products, 12)
