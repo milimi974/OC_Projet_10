@@ -2,3 +2,4 @@
 *.pyc
 staticfiles
 env
+master/prod_settings.py
