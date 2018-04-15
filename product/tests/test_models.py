@@ -1,7 +1,6 @@
 import pytest
 from django.test import TestCase
-from mixer.backend.django import mixer
-from types import *
+
 from product.models import Category, Product
 from django.core import management
 

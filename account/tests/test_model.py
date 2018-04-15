@@ -2,12 +2,9 @@ import pytest
 
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
-from mixer.backend.django import mixer
 
 
 from django.contrib.auth.models import AnonymousUser, User
-
-from product.models import Category
 
 pytestmark = pytest.mark.django_db
 

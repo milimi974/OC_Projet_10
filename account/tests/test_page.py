@@ -3,8 +3,7 @@ from django.core.paginator import Page
 from django.db.models import QuerySet
 from django.test import TestCase
 from django.urls import reverse
-from mixer.backend.django import mixer
-from types import *
+
 from django.contrib.auth.models import User
 
 from account.forms import UserLoginForm, UserRegisterForm

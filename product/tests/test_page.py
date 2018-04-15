@@ -2,8 +2,6 @@ import pytest
 from django.db.models import QuerySet
 from django.test import TestCase
 from django.urls import reverse
-from mixer.backend.django import mixer
-from types import *
 
 from product.models import Product
 
