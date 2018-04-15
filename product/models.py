@@ -3,10 +3,12 @@ import math
 import os
 
 import csv
-from django.contrib.sites import requests
+
 from django.db import models
 
 # Create your models here.
+import requests
+
 from master.settings import BASE_DIR
 from tools import upload_openfoodfact_cvs, clear_string, str_to_float
 
@@ -154,6 +156,7 @@ class ManageDB(models.Manager):
                 # get json list from remote
                 response = requests.get(request_url)
                 json_object = response.json()
+
                 # if no products exit loop
                 if len(json_object['products']) == 0:
                     max = True
@@ -163,15 +166,24 @@ class ManageDB(models.Manager):
                         counter_p += Product.add(data, category_qs)
                         if counter_p == qty:
                             break
-
+                    # change page
+                    page += 1
+                # if total product reached reset counter then exit loop
                 if counter_p == qty:
                     total_product += counter_p
                     counter_p = 0
+                    # if update category and product reached inc category counter
                     if not create:
                         counter_c += 1
                     max = True
+            # if new category inc counter
             if create:
                 counter_c += 1
+                # if total product not reached in a category reset anyway
+                if counter_p < qty:
+                    total_product += counter_p
+                    counter_p = 0
+            # if total category reached exit loop
             if counter_c == qtyc:
                 break
 
