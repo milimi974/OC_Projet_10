@@ -1,4 +1,4 @@
- import argparse
+import argparse
 
 from django.core.management.base import BaseCommand, CommandError
 from product.models import Product
