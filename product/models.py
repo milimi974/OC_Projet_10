@@ -135,12 +135,23 @@ class ManageDB(models.Manager):
             qty -- int total product to create
             qtyc -- int total category to create
         """
+        # read all products
+        read_all = False
+        if qty == -1:
+            read_all = True
+
         # counter
         counter_p = 0
         counter_c = 0
         total_product = 0
         # create all categories
         categories = self.categories.upload()
+
+        # config for save all categories
+        if qtyc == -1:
+            # read total entries
+            qtyc = int(categories['count'])
+
         for category in categories['tags']:
 
             # get category from db
@@ -150,6 +161,10 @@ class ManageDB(models.Manager):
             url = category['url']+'/{}.json'
             page = 1
             max = False
+            # read all products
+            if qty == -1:
+                qty = int(category['products'])
+
             # while max page doesn't reach
             while not max:
                 request_url = url.format(str(page))
@@ -159,17 +174,19 @@ class ManageDB(models.Manager):
 
                 # if no products exit loop
                 if len(json_object['products']) == 0:
+                    total_product += counter_p
+                    counter_p = 0
                     max = True
                 else:
                     for product in json_object['products']:
                         data = self.format_product(product)
                         counter_p += Product.add(data, category_qs)
-                        if counter_p == qty:
+                        if counter_p == qty and not read_all:
                             break
                     # change page
                     page += 1
                 # if total product reached reset counter then exit loop
-                if counter_p == qty:
+                if counter_p == qty and not read_all:
                     total_product += counter_p
                     counter_p = 0
                     # if update category and product reached inc category counter

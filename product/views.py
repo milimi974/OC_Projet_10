@@ -8,7 +8,9 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 import tools
 from product.models import Product
+import logging
 
+logger = logging.getLogger(__name__)
 
 def search(request):
     # Search products substitutions
@@ -50,6 +52,9 @@ def search(request):
         'title': title,
         'pagination': pagination,
     }
+    logger.info('New search', exc_info=True, extra={
+        'request': request,
+    })
     return render(request, 'product/search.html',context)
 
 
