@@ -17,7 +17,9 @@ from django.contrib.auth import (
 import tools
 from account.models import UserProduct
 from product.models import Product
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, UserEditForm
+
+
 # from product.mocks import  Product
 
 # login view
@@ -70,6 +72,22 @@ def register_view(request):
     context = {"form": form, "title": title}
     return render(request, 'account/form.html', context)
 
+# login view
+def edit_view(request):
+
+    if not request.user.is_authenticated:
+        return redirect("/")
+    title = "Modification profil"
+    form = UserEditForm(request.POST or None)
+    # Create user if clean form data
+    if form.is_valid():
+        user = form.save(commit=False)
+        pwd = form.cleaned_data.get('password')
+        user.set_password(pwd)
+        user.save()
+
+    context = {"form":form, "title": title}
+    return render(request, 'account/form.html', context)
 
 # user profile view
 def profile_view(request):

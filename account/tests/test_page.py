@@ -45,6 +45,30 @@ class ProfileTestCase(TestCase):
         # test status page code
         self.assertEqual(response.status_code, 200, 'Should be callable')
 
+    # test if profile is updated
+    def test_pofile_updated(self):
+        user = User.objects.create_user('foo', 'myemail@test.com', 'bar')
+        self.client.login(username='foo', password='bar')
+        response = self.client.get(reverse('edit_profile'))
+
+    # test if edit profile page return 200 if user login
+    def test_edit_profile_return_200(self):
+        user = User.objects.create_user('foo', 'myemail@test.com', 'bar')
+        self.client.login(username='foo', password='bar')
+        response = self.client.get(reverse('edit_profile'))
+        # test view render
+        self.assertTemplateUsed(response, 'account/form.html')
+        # test status page code
+        self.assertEqual(response.status_code, 200, 'Should be callable')
+
+    # test if edit profile page return 302 if user logout
+    def test_edit_profile_return_302(self):
+        self.client.logout()
+        response = self.client.get(reverse('edit_profile'))
+        # test status page code
+        self.assertEqual(response.status_code, 302, 'Should be redirect')
+
+
 # User product list
 class UserProductTestCase(TestCase):
     # test if User product list page return 200 if user login

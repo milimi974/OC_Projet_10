@@ -36,6 +36,34 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError("Cette email est déjà existant!")
         return email
 
+class UserEditForm(forms.ModelForm):
+    password = forms.CharField(label='Confirmer le mot de passe',widget=forms.PasswordInput)
+    pass2 = forms.CharField(label='Mot de passe',widget=forms.PasswordInput)
+    first_name = forms.CharField(label='Prénom',widget=forms.TextInput, required=True)
+    last_name = forms.CharField(label='Nom',widget=forms.TextInput, required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'pass2', 'password']
+
+
+    def clean_password(self):
+        # check password
+        pwd1 = self.cleaned_data.get("password")
+        pwd2 = self.cleaned_data.get("pass2")
+
+        if pwd1 != pwd2:
+            raise forms.ValidationError("les mots de passe ne sont pas identique!")
+        return pwd1
+
+    def clean_email(self):
+        # check email
+        email = self.cleaned_data.get("email")
+        email_qs = User.objects.filter(email=email)
+        if not email_qs.exists():
+            raise forms.ValidationError("Ce compte utilisateur n'existe pas")
+        return email
+
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(
