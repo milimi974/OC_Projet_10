@@ -63,6 +63,27 @@ class ProfileTestCase(TestCase):
         self.assertEqual(new_user.first_name, 'yohan', 'Should be equal')
         self.assertEqual(new_user.last_name, 'solon', 'Should be equal')
 
+    # test changed password
+    def test_changed_password(self):
+        old_user = User.objects.create_user('foo', 'myemail@test.com', 'bar')
+        self.client.login(username='foo', password='bar')
+        args = {
+            'old_password': 'bar',
+            'new_password1': '1234a5678',
+            'new_password2': "1234a5678",
+        }
+        response = self.client.post(reverse('change_password'), args)
+        log_in = self.client.login(username='foo', password='1234a5678')
+        self.assertTrue(log_in)
+        args = {
+            'old_password': '1234a5678',
+            'new_password1': '1234b5678',
+            'new_password2': "1234b5678",
+        }
+        response = self.client.post(reverse('change_password'), args)
+        log_in = self.client.login(username='foo', password='1234b5678')
+        self.assertTrue(log_in)
+
     # test if edit profile page return 200 if user login
     def test_edit_profile_return_200(self):
         user = User.objects.create_user('foo', 'myemail@test.com', 'bar')
