@@ -16,4 +16,4 @@ services:
       - postgresql
 
 script:
-      - py.testgit
+      - py.test
