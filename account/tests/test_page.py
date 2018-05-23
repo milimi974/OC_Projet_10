@@ -46,10 +46,22 @@ class ProfileTestCase(TestCase):
         self.assertEqual(response.status_code, 200, 'Should be callable')
 
     # test if profile is updated
-    def test_pofile_updated(self):
-        user = User.objects.create_user('foo', 'myemail@test.com', 'bar')
+    def test_profile_updated(self):
+        old_user = User.objects.create_user('foo', 'myemail@test.com', 'bar')
         self.client.login(username='foo', password='bar')
         response = self.client.get(reverse('edit_profile'))
+        args = {
+            'username': 'foo',
+            'email':'myemail@test.com',
+            'first_name': "yohan",
+            'last_name': "solon",
+        }
+        response = self.client.post(reverse('edit_profile'), args)
+        new_user = User.objects.filter(email='myemail@test.com')[0]
+
+        # test field
+        self.assertEqual(new_user.first_name, 'yohan', 'Should be equal')
+        self.assertEqual(new_user.last_name, 'solon', 'Should be equal')
 
     # test if edit profile page return 200 if user login
     def test_edit_profile_return_200(self):

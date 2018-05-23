@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 from django.http import HttpResponse
 
@@ -9,10 +10,11 @@ from django.contrib.auth import (
     authenticate,
     get_user_model,
     login,
-    logout
-)
+    logout,
+    update_session_auth_hash)
 
 # Create your views here.
+from django.urls import reverse
 
 import tools
 from account.models import UserProduct
@@ -42,6 +44,7 @@ def login_view(request):
     context = {"form":form, "title": title}
     return render(request, 'account/form.html', context)
 
+
 # logout view
 def logout_view(request):
     # redirect homepage if already disconnected
@@ -50,6 +53,7 @@ def logout_view(request):
     # Disconnect user
     logout(request)
     return render(request, 'account/logout.html')
+
 
 # register view
 def register_view(request):
@@ -72,27 +76,50 @@ def register_view(request):
     context = {"form": form, "title": title}
     return render(request, 'account/form.html', context)
 
+
 # login view
 def edit_view(request):
 
     if not request.user.is_authenticated:
         return redirect("/")
     title = "Modification profil"
-    form = UserEditForm(request.POST or None)
+    form = UserEditForm(request.POST or None, instance=request.user)
+
     # Create user if clean form data
     if form.is_valid():
-        user = form.save(commit=False)
-        pwd = form.cleaned_data.get('password')
-        user.set_password(pwd)
-        user.save()
+       user = form.save(commit=False)
+       user.save()
 
-    context = {"form":form, "title": title}
+    context = {"form":form, "title": title, "password": True}
     return render(request, 'account/form.html', context)
+
+
+# login view
+def change_password_view(request):
+
+    if not request.user.is_authenticated:
+        return redirect("/")
+    title = "Modification password"
+
+    if request.method == "POST":
+
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        # Create user if clean form data
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("edit_profile"))
+
+    else:
+        form = PasswordChangeForm(user=request.user)
+        context = {"form":form, "title": title}
+        return render(request, 'account/form.html', context)
+
 
 # user profile view
 def profile_view(request):
     title = "Profil"
     return render(request, 'account/profile.html', {"title": title})
+
 
 @login_required(login_url='/user/login/')
 def list_view(request):

@@ -29,6 +29,9 @@
             <hr>
           {% endif %}
           <button type="submit" class="btn btn-primary">Valider</button>
+          {% if password %}
+            <a href="{% url 'change_password' %}">Changer le mot de passe</a>
+          {% endif%}
         </form>
     </div>
   </div>
