@@ -36,6 +36,22 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError("Cette email est déjà existant!")
         return email
 
+class UserEditForm(forms.ModelForm):
+    first_name = forms.CharField(label='Prénom',widget=forms.TextInput, required=True)
+    last_name = forms.CharField(label='Nom',widget=forms.TextInput, required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        # check email
+        email = self.cleaned_data.get("email")
+        email_qs = User.objects.filter(email=email)
+        if not email_qs.exists():
+            raise forms.ValidationError("Ce compte utilisateur n'existe pas")
+        return email
+
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(

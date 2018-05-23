@@ -1,1 +1,6 @@
-{}
+{
+  "account/tests/test_page.py::ProfileTestCase::test_edit_profile_202": true,
+  "account/tests/test_page.py::ProfileTestCase::test_edit_profile_302": true,
+  "account/tests/test_page.py::ProfileTestCase::test_edit_profile_404": true,
+  "account/tests/test_page.py::ProfileTestCase::test_edit_profile_return_202": true
+}
